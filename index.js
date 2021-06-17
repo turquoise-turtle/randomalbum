@@ -10,7 +10,8 @@ if (loggedin != 'true') {
 
 	document.querySelector('button').addEventListener('click', function(e){
 		window.location.href = url;
-	})
+	});
+	document.querySelector('button').style.display = 'inline-block';
 
 }
 
