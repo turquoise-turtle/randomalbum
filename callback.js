@@ -16,9 +16,10 @@ if (window.location.hash == '') {
 	let temp = hk.split('='); 
 		params[temp[0]] = temp[1] 
 	});
-	//console.log(params);
+	console.log(params);
+	console.log(params['state'] == localid)
 
-	if (params['uuid'] == localid) {
+	if (params['state'] == localid) {
 		localStorage.setItem('access_token', params['access_token']);
 		localStorage.setItem('expires_in', params['expires_in']);
 		localStorage.setItem('loggedin', 'true');
