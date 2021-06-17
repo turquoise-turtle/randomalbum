@@ -8,6 +8,9 @@ if (loggedin != 'true') {
 	url = url + '&scope=' + encodeURIComponent('playlist-read-private user-modify-playback-state');
 	url = url + '&state=' + uuid;
 
+	document.querySelector('button').addEventListener('click', function(e){
+		window.location.href = url;
+	})
 
 }
 
