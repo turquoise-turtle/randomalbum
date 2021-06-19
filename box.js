@@ -14,6 +14,7 @@ var Box = {
 		.then(function(data) {
 			console.log(data);
 			Box.username = data['id'];
+			return null;
 		}).catch(function(e) {
 			console.error(e);
 		});
@@ -34,7 +35,7 @@ var Box = {
 	},
 	loadMore: function() {
 		//return spotifyApi.getUserPlaylists(username, nextOffset)
-		return spotifyApi.getUserPlaylists(nextOffset)
+		return spotifyApi.getUserPlaylists(Box.nextOffset)
 		.then(promRes, promRej)
 		.then(function(data){
 			console.log(data);
