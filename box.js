@@ -27,7 +27,7 @@ var Box = {
 			//Box.playlists.push.apply(Box.playlists, data['items']);
 			Box.nextOffset['offset'] = Box.nextOffset['offset'] + data['limit'];
 			Box.total = data['total'];
-			console.log(nextOffset);
+			console.log(Box.nextOffset);
 		}).catch(function(e) {
 			console.error(e);
 		});
@@ -42,7 +42,7 @@ var Box = {
 			//Box.playlists.append(data['items']);
 			//Box.loadItems(data['items']);
 			Box.nextOffset['offset'] = Box.nextOffset['offset'] + data['limit'];
-			console.log(nextOffset);
+			console.log(Box.nextOffset);
 		}).catch(function(e) {
 			console.error(e);
 		});
@@ -53,6 +53,7 @@ var Box = {
 		return spotifyApi.getPlaylist(id)
 		.then(promRes, promRej)
 		.then(function(data){
+			console.log(data);
 			Box.current = data;
 			Box.currentSongs = data.tracks.items;
 			return Box.loadAllPlaylistTracks();
@@ -66,6 +67,7 @@ var Box = {
 		return spotifyApi.getPlaylistTracks(id, {'offset': offsetNumber})
 		.then(promRes, promRej)
 		.then(function(data){
+			console.log
 			Box.currentSongs.push.apply(Box.currentSongs, data['items']);
 			return null;
 		});
