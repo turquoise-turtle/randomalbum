@@ -1,48 +1,54 @@
-var spotifyApi = new SpotifyWebApi();
-var token = localStorage.getItem('access_token');
-spotifyApi.setAccessToken(token);
+/*
 
-var username = '';
-var nextOffset = {'offset': 0};
+Box
+	playlists
+	favourites
+	.loadmore
+	current
+		songs
+		albums
+		.extractalbums
+	currentSongs
+Playlist view
+Main view
 
-spotifyApi.getMe()
-.then(promRes, promRej)
-.then(function(data) {
-	console.log(data);
-	username = data['id'];
+
+*/
+
+
+
+
+
+
+
+
+
+
+var Main = {
+	oninit: function(vnode){
+		Box.loadUser()
+		.then(Box.loadPlaylists);
+	},
+	view: function(vnode) {
+		return m('.playlists-container', [
+			m('.playlists', Box.playlists.map(function(playlist){
+				return m(m.route.Link, {
+					class: 'playlist',
+					href: '/view/' + playlist.id
+				}, playlist.name);
+			})),
+			m('button', {onclick: Box.loadMore}, 'Load More Playlists')
+		]);
+	}
+}
+
+m.route(document.querySelector('.app'), '/list', {
+    '/list': Main,
+	'/view/:id': Playlist
 })
 
 
 
-
-spotifyApi.getUserPlaylists()
-.then(promRes, promRej)
-.then(function(data){
-	console.log(data);
-	loadLists(data['items']);
-	nextOffset['offset'] = nextOffset['offset'] + data['limit'];
-	console.log(nextOffset);
-});
-
-function loadMorePlaylists() {
-	return spotifyApi.getUserPlaylists(username, nextOffset)
-	.then(promRes, promRej)
-	.then(function(data){
-		console.log(data);
-		loadLists(data['items']);
-		nextOffset['offset'] = nextOffset['offset'] + data['limit'];
-		console.log(nextOffset);
-	});
-}
-
-
-function loadLists(lists) {
-	for (var list of lists) {
-		var a = document.createElement('li');
-		a.innerText = list['name'];
-		document.querySelector('ul').appendChild(a);
-	}
-}
 
 function promRes(data) {
 	return new Promise((resolve,reject) => {
