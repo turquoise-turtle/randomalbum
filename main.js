@@ -48,7 +48,7 @@ var Main = {
 
 var Playlist = {
 	oninit: function(vnode){
-		Box.loadPlaylist(route.param.id);
+		Box.loadPlaylist(m.route.param.id);
 	},
 	view: function(vnode) {
 		return m('.playlist', [
@@ -58,7 +58,7 @@ var Playlist = {
 			})),
 			m('.bar', m(m.route.Link, {
 				class: 'barbutton',
-				href: '/albums/' + route.param.id
+				href: '/albums/' + m.route.param.id
 			}, 'Show Albums'))
 		]);
 	}
