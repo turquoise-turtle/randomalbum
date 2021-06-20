@@ -20,8 +20,9 @@ if (window.location.hash == '') {
 	console.log(params['state'] == localid)
 
 	if (params['state'] == localid) {
+		var end = new Date().getTime() + params['expires_in'] * 1000;
 		localStorage.setItem('access_token', params['access_token']);
-		localStorage.setItem('expires_in', params['expires_in']);
+		localStorage.setItem('expires_by', end);
 		localStorage.setItem('loggedin', 'true');
 
 		window.location.replace('main.html');

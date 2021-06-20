@@ -1,3 +1,9 @@
+var expires_by = localStorage.getItem('expires_by');
+var now = new Date().getTime();
+if (expires_by - now < 600) {
+	location.href = 'index.html';
+}
+
 var spotifyApi = new SpotifyWebApi();
 var token = localStorage.getItem('access_token');
 spotifyApi.setAccessToken(token);
@@ -29,6 +35,7 @@ var Box = {
 			Box.nextOffset['offset'] = Box.nextOffset['offset'] + data['limit'];
 			Box.total = data['total'];
 			console.log(Box.nextOffset);
+			m.redraw();
 		}).catch(function(e) {
 			console.error(e);
 		});
@@ -44,6 +51,7 @@ var Box = {
 			//Box.loadItems(data['items']);
 			Box.nextOffset['offset'] = Box.nextOffset['offset'] + data['limit'];
 			console.log(Box.nextOffset);
+			m.redraw();
 		}).catch(function(e) {
 			console.error(e);
 		});
@@ -79,7 +87,7 @@ var Box = {
 		while (Box.currentSongs.length < Box.current.tracks.total) {
 			await Box.loadMorePlaylistTracks();
 		}
-
+		m.redraw();
 	}
 };
 

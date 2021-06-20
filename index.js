@@ -1,3 +1,9 @@
+var expires_by = localStorage.getItem('expires_by') || 0;
+var now = new Date().getTime();
+if (expires_by - now > 600) {
+	location.href = 'main.html';
+}
+
 var loggedin = localStorage.getItem('loggedin');
 //if (loggedin != 'true') {
 	var uuid = uuidv4();
