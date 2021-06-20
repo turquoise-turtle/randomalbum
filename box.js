@@ -76,7 +76,7 @@ var Box = {
 		return spotifyApi.getPlaylistTracks(id, {'offset': offsetNumber})
 		.then(promRes, promRej)
 		.then(function(data){
-			console.log
+			console.log(data);
 			Box.currentSongs.push.apply(Box.currentSongs, data['items']);
 			return null;
 		});

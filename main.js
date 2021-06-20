@@ -32,10 +32,10 @@ var Main = {
 	view: function(vnode) {
 		return m('.playlists-container', [
 			m('.playlists', Box.playlists.map(function(playlist){
-				return m(m.route.Link, {
+				return m('.playlist', m(m.route.Link, {
 					class: 'playlist',
 					href: '/view/' + playlist.id
-				}, playlist.name);
+				}, playlist.name));
 			})),
 			m('button', {onclick: Box.loadMore}, 'Load More Playlists')
 		]);
