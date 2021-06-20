@@ -66,7 +66,7 @@ var Playlist = {
 
 var Album = {
 	oninit: function(vnode) {
-		Box.loadAlbumPage(vnode.attrs.id);
+		Box.loadAlbumPage(m.route.param('id'));
 	},
 	view: function(vnode) {
 		return m('.playlist', [
