@@ -15,6 +15,11 @@ Main view
 
 */
 
+var Header = {
+	view: function(vnode) {
+		return m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum'))
+	}
+};
 
 var Main = {
 	oninit: function(vnode){
@@ -22,14 +27,17 @@ var Main = {
 		.then(Box.loadPlaylists);
 	},
 	view: function(vnode) {
-		return m('.playlists-container', [
-			m('.playlists', Box.playlists.map(function(playlist){
-				return m('.playlist', m(m.route.Link, {
-					class: 'playlist',
-					href: '/view/' + playlist.id
-				}, playlist.name));
-			})),
-			m('button', {onclick: Box.loadMore}, 'Load More Playlists')
+		return m('.app', [
+			m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum')),
+			m('.playlists-container', [
+				m('.playlists', Box.playlists.map(function(playlist){
+					return m('.playlist', m(m.route.Link, {
+						class: 'playlist',
+						href: '/view/' + playlist.id
+					}, playlist.name));
+				})),
+				m('button', {onclick: Box.loadMore}, 'Load More Playlists')
+			])
 		]);
 	}
 }
@@ -74,7 +82,16 @@ var Album = {
 
 
 m.route(document.querySelector('.app'), '/list', {
-    '/list': Main,
+    '/list': {
+		view: function(vnode) {
+			return m('.app', [
+				m(Header),
+				m(Main)
+			]);
+		}
+	},
+	
+	//Main,
 	'/view/:id': Playlist,
 	'/albums/:id': Album
 })
