@@ -6,7 +6,7 @@ var Playlist = {
 		return m('.playlist', [
 			m('h2', {value: Box.current.name}), 
 			m('.tracks', Box.currentSongs.map(function(song){
-				return m('h3', {value: song.track.name});
+				return m('h3', song.track.name);
 			}))
 		]);
 	}
