@@ -65,6 +65,7 @@ var Box = {
 			console.log(data);
 			Box.current = data;
 			Box.currentSongs = data.tracks.items;
+			m.redraw();
 			return Box.loadAllPlaylistTracks();
 		}).catch(function(e) {
 			console.error(e);
@@ -83,9 +84,10 @@ var Box = {
 	},
 	loadAllPlaylistTracks: async function () {
 		//a while loop with promises?
-		var result = null;
+		console.log(Box.currentSongs.length);
 		while (Box.currentSongs.length < Box.current.tracks.total) {
 			await Box.loadMorePlaylistTracks();
+			console.log(Box.currentSongs.length);
 		}
 		m.redraw();
 	}
