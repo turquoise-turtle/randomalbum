@@ -15,9 +15,12 @@ Main view
 
 */
 
-var Header = {
+var Layout = {
 	view: function(vnode) {
-		return m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum'))
+		return m('.app', [
+			m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum')),
+			m('.content', vnode.children)
+		]);
 	}
 };
 
@@ -84,29 +87,20 @@ var Album = {
 
 m.route(document.querySelector('.app'), '/list', {
     '/list': {
-		view: function(vnode) {
-			return m('.app', [
-				m(Header),
-				m(Main)
-			]);
+		render: function(){
+			return m(Layout, m(Main))
 		}
 	},
 	
 	//Main,
 	'/view/:id': {
-		view: function(vnode) {
-			return m('.app', [
-				m(Header),
-				m(Playlist)
-			]);
+		render: function(){
+			return m(Layout, m(Playlist))
 		}
 	},
 	'/albums/:id': {
-		view: function(vnode) {
-			return m('.app', [
-				m(Header),
-				m(Album)
-			]);
+		render: function(){
+			return m(Layout, m(Album))
 		}
 	}
 })
