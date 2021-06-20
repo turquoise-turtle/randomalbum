@@ -48,7 +48,7 @@ var Main = {
 
 var Playlist = {
 	oninit: function(vnode){
-		Box.loadPlaylist(vnode.attrs.id);
+		Box.loadPlaylist(route.param.id);
 	},
 	view: function(vnode) {
 		return m('.playlist', [
@@ -58,7 +58,7 @@ var Playlist = {
 			})),
 			m('.bar', m(m.route.Link, {
 				class: 'barbutton',
-				href: '/albums/' + vnode.attrs.id
+				href: '/albums/' + route.param.id
 			}, 'Show Albums'))
 		]);
 	}
@@ -91,11 +91,9 @@ m.route(document.querySelector('.app'), '/list', {
 			return m(Layout, m(Main))
 		}
 	},
-	
-	//Main,
 	'/view/:id': {
 		render: function(vnode){
-			return m(Layout, m(Playlist, vnode.attrs.id))
+			return m(Layout, m(Playlist))
 		}
 	},
 	'/albums/:id': {
