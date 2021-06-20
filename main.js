@@ -93,8 +93,22 @@ m.route(document.querySelector('.app'), '/list', {
 	},
 	
 	//Main,
-	'/view/:id': Playlist,
-	'/albums/:id': Album
+	'/view/:id': {
+		view: function(vnode) {
+			return m('.app', [
+				m(Header),
+				m(Playlist)
+			]);
+		}
+	},
+	'/albums/:id': {
+		view: function(vnode) {
+			return m('.app', [
+				m(Header),
+				m(Album)
+			]);
+		}
+	}
 })
 
 
