@@ -90,6 +90,18 @@ var Box = {
 			console.log(Box.currentSongs.length);
 		}
 		m.redraw();
+		return null;
+	},
+	loadAlbumPage: function(id) {
+		if (Box.current.id == id) {
+			//playlist already loaded
+		} else {
+			return Box.loadPlaylist(id)
+			.then(Box.loadAlbums)
+		}
+	},
+	loadAlbums: function() {
+
 	}
 };
 

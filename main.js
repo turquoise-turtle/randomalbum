@@ -16,14 +16,6 @@ Main view
 */
 
 
-
-
-
-
-
-
-
-
 var Main = {
 	oninit: function(vnode){
 		Box.loadUser()
@@ -42,9 +34,49 @@ var Main = {
 	}
 }
 
+var Playlist = {
+	oninit: function(vnode){
+		Box.loadPlaylist(vnode.attrs.id);
+	},
+	view: function(vnode) {
+		return m('.playlist', [
+			m('h2', {value: Box.current.name}), 
+			m('.tracks', Box.currentSongs.map(function(song){
+				return m('h3', song.track.name);
+			})),
+			m('.bar', m(m.route.Link, {
+				class: 'barbutton',
+				href: '/albums/' + vnode.attrs.id
+			}, 'Show Albums'))
+		]);
+	}
+}
+
+var Album = {
+	oninit: function(vnode) {
+		Box.loadAlbumPage(vnode.attrs.id);
+	},
+	view: function(vnode) {
+		return m('.playlist', [
+			m('h2', {value: Box.current.name}), 
+			m('.albums', Box.currentSongs.map(function(song){
+				return m('a', {
+					href: song.track.album.uri,
+					style: {
+						display: 'block'
+					}
+				}, m('.album', m('h3', song.track.album.name)));
+			}))
+		]);
+	}
+}
+
+
+
 m.route(document.querySelector('.app'), '/list', {
     '/list': Main,
-	'/view/:id': Playlist
+	'/view/:id': Playlist,
+	'/albums/:id': Album
 })
 
 
