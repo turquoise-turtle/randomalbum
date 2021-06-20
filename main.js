@@ -27,18 +27,19 @@ var Main = {
 		.then(Box.loadPlaylists);
 	},
 	view: function(vnode) {
-		return m('.app', [
-			m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum')),
-			m('.playlists-container', [
-				m('.playlists', Box.playlists.map(function(playlist){
-					return m('.playlist', m(m.route.Link, {
-						class: 'playlist',
-						href: '/view/' + playlist.id
-					}, playlist.name));
-				})),
-				m('button', {onclick: Box.loadMore}, 'Load More Playlists')
-			])
-		]);
+		//return m('.app', [
+		//	m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum')),
+		return m('.playlists-container', [
+			m('.playlists', Box.playlists.map(function(playlist){
+				return m('.playlist', m(m.route.Link, {
+					class: 'playlist',
+					href: '/view/' + playlist.id
+				}, playlist.name));
+			})),
+			m('br'),
+			m('button', {onclick: Box.loadMore}, 'Load More Playlists')
+		])
+		//]);
 	}
 }
 
