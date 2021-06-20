@@ -94,8 +94,8 @@ m.route(document.querySelector('.app'), '/list', {
 	
 	//Main,
 	'/view/:id': {
-		render: function(){
-			return m(Layout, m(Playlist))
+		render: function(vnode){
+			return m(Layout, m(Playlist, vnode.attrs.id))
 		}
 	},
 	'/albums/:id': {
