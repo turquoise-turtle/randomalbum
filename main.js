@@ -85,12 +85,31 @@ var Playlist = {
 			m('.tracks', Box.currentSongs.filter(function(song){
 				return song.track.available_markets.length > 0;
 			}).map(function(song){
-				return m('h3', song.track.name);
+				return m('.track', [
+					m('h3', song.track.name),
+					m('button.queuebtn', {
+						onclick: function() {
+							throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song.track.id])
+						}
+					}, 'Add to Queue')
+				]);
 			})),
 			m(Footer)
 		]);
 	}
 }
+
+var timerId;
+var throttle = function (func, delay, args) {
+	if (timerId) {
+		return;
+	}
+	timerId = setTimeout(function () {
+		func.apply(null, args)
+		timerId = undefined;
+	}, delay)
+}
+
 
 var Album = {
 	oninit: function(vnode) {

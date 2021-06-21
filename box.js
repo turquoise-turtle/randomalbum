@@ -108,8 +108,38 @@ var Box = {
 			//.then(Box.loadAlbums)
 		}
 	},
-	loadAlbums: function() {
 
+	addAlbumTracksFromPositionToQueue: function(id) {
+		var songId = song.track.id;
+		var albumId = song.track.album.id;
+		var tracks = [];
+		var total = 0;
+		var offset = {offset: 0};
+		return spotifyApi.getAlbum(albumId)
+		.then(promRes, promRej)
+		.then(function(data){
+			console.log(data);
+			tracks = data.tracks.items;
+			total = data.tracks.total;
+			offset.offset = data.tracks.limit;
+			while (tracks.length < total) {
+				await spotifyApi.getAlbumTracks(albumId, offset)
+				.then(promRes, promRej)
+				.then(function(data){
+					console.log(data);
+					tracks.push.apply(tracks, data.items);
+					offset.offset = offset.offset + data.limit;
+				});
+			}
+			var shown = false;
+			var toQueue = [];
+			for (var title of tracks) {
+				if (title.track.id == songId || shown) {
+					toQueue.push(spotifyApi.queue(title.track.id));
+				}
+			}
+			return Promise.all(toQueue);
+		});
 	}
 };
 
