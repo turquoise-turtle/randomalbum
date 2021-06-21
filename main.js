@@ -20,7 +20,7 @@ var Layout = {
 		return m('.app', [
 			m('h1.apptitle', [
 				m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum'),
-				Box.username ? m('span', '- '  + Box.username) : null
+				Box.username ? m('span', ' - '  + Box.username) : null
 			]),
 			
 			m('.content', vnode.children)
@@ -99,8 +99,8 @@ var Album = {
 	view: function(vnode) {
 		return m('.playlist', [
 			m('h2', {value: Box.current.name}), 
-			m('.albums', Box.currentSongs.filter(function(song){
-				return song.track.available_markets.length > 0;
+			m('.albums', Box.currentSongs.filter(function(song, index, self){
+				return song.track.available_markets.length > 0 && self.indexOf(value) === index;
 			}).map(function(song){
 				return m('a', {
 					href: song.track.album.uri,
