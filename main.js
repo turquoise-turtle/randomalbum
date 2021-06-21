@@ -18,7 +18,11 @@ Main view
 var Layout = {
 	view: function(vnode) {
 		return m('.app', [
-			m('h1.apptitle', m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum')),
+			m('h1.apptitle', [
+				m(m.route.Link, {class: 'applink', href: '/'}, 'randomalbum'),
+				Box.username ? m('span', '- '  + Box.username) : null
+			]),
+			
 			m('.content', vnode.children)
 		]);
 	}
