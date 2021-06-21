@@ -110,8 +110,8 @@ var Box = {
 		var tracks = [];
 		var total = 0;
 		var offset = {offset: 0};
-		return spotifyApi.getAlbum(albumId)
-		.then(function(data){
+		var data = await spotifyApi.getAlbum(albumId);
+		//.then(function(data){
 			console.log(data);
 			tracks = data.tracks.items;
 			total = data.tracks.total;
@@ -133,7 +133,7 @@ var Box = {
 				}
 			}
 			return Promise.all(toQueue);
-		});
+		//});
 	}
 };
 
