@@ -132,6 +132,7 @@ var Box = {
 		for (var title of tracks) {
 			console.log(title);
 			if (title.id == songId || shown) {
+				shown = true;
 				toQueue.push(spotifyApi.queue(title.uri));
 			}
 		}
