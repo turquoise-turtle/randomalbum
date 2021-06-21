@@ -151,7 +151,7 @@ var Box = {
 			}
 		  
 			// This will make iteration to split array (requests) to chunks of five items 
-			for (i = 0; i < Math.ceil(items.length / 5); i++) {
+			for (i = 0; i < Math.ceil(tracks.length / 5); i++) {
 			  sendReq(tracks, i, apiCall);
 			}
 		}).then(Promise.all.bind(Promise)).then(console.log);
