@@ -112,27 +112,29 @@ var Box = {
 		var offset = {offset: 0};
 		var data = await spotifyApi.getAlbum(albumId);
 		//.then(function(data){
-			console.log(data);
-			tracks = data.tracks.items;
-			total = data.tracks.total;
-			offset.offset = data.tracks.limit;
-			while (tracks.length < total) {
-				var newdata = await spotifyApi.getAlbumTracks(albumId, offset);
-				//.then(function(data){
-					console.log(newdata);
-					tracks.push.apply(tracks, newdata.items);
-					offset.offset = offset.offset + newdata.limit;
-					//return null;
-				//});
+		console.log(data);
+		tracks.push.apply(tracks, data.tracks.items);
+		console.log(tracks);
+		total = data.tracks.total;
+		offset.offset = data.tracks.limit;
+		while (tracks.length < total) {
+			var newdata = await spotifyApi.getAlbumTracks(albumId, offset);
+			//.then(function(data){
+			console.log(newdata);
+			tracks.push.apply(tracks, newdata.items);
+			offset.offset = offset.offset + newdata.limit;
+			//return null;
+			//});
+		}
+		console.log(tracks);
+		var shown = false;
+		var toQueue = [];
+		for (var title of tracks) {
+			if (title.id == songId || shown) {
+				toQueue.push(spotifyApi.queue(title.id));
 			}
-			var shown = false;
-			var toQueue = [];
-			for (var title of tracks) {
-				if (title.id == songId || shown) {
-					toQueue.push(spotifyApi.queue(title.id));
-				}
-			}
-			return Promise.all(toQueue);
+		}
+		return Promise.all(toQueue);
 		//});
 	}
 };
