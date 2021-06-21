@@ -89,7 +89,7 @@ var Playlist = {
 					m('h3', song.track.name),
 					m('button.queuebtn', {
 						onclick: function() {
-							throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song.track.id])
+							throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song])
 						}
 					}, 'Add to Queue')
 				]);
