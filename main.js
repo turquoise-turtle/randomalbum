@@ -88,7 +88,7 @@ var Playlist = {
 				return m('.track', [
 					m('h3', song.track.name),
 					m('button.queuebtn', {
-						onclick: function() {
+						onclick: async function() {
 							throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song])
 						}
 					}, 'Add to Queue')
@@ -100,7 +100,7 @@ var Playlist = {
 }
 
 var timerId;
-var throttle = function (func, delay, args) {
+var throttle = async function (func, delay, args) {
 	if (timerId) {
 		return;
 	}
