@@ -128,8 +128,8 @@ var Box = {
 			var shown = false;
 			var toQueue = [];
 			for (var title of tracks) {
-				if (title.track.id == songId || shown) {
-					toQueue.push(spotifyApi.queue(title.track.id));
+				if (title.id == songId || shown) {
+					toQueue.push(spotifyApi.queue(title.id));
 				}
 			}
 			return Promise.all(toQueue);
