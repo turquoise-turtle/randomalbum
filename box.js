@@ -130,8 +130,9 @@ var Box = {
 		var shown = false;
 		var toQueue = [];
 		for (var title of tracks) {
+			console.log(title);
 			if (title.id == songId || shown) {
-				toQueue.push(spotifyApi.queue(title.id));
+				toQueue.push(spotifyApi.queue(title.uri));
 			}
 		}
 		return Promise.all(toQueue);
