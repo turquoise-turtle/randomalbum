@@ -100,7 +100,7 @@ var Album = {
 		return m('.playlist', [
 			m('h2', {value: Box.current.name}), 
 			m('.albums', Box.currentSongs.filter(function(song, index, self){
-				return song.track.available_markets.length > 0 && self.indexOf(song) === index;
+				return song.track.available_markets.length > 0;
 			}).map(function(song){
 				return m('a', {
 					href: song.track.album.uri,
