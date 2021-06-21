@@ -19,7 +19,6 @@ var Box = {
 			return Promise.resolve();
 		}
 		return spotifyApi.getMe()
-		.then(promRes, promRej)
 		.then(function(data) {
 			console.log(data);
 			Box.username = data['id'];
@@ -33,7 +32,6 @@ var Box = {
 			return Promise.resolve();
 		}
 		return spotifyApi.getUserPlaylists()
-		.then(promRes, promRej)
 		.then(function(data){
 			console.log(data);
 			Box.playlists = data['items'];
@@ -50,7 +48,6 @@ var Box = {
 	loadMore: function() {
 		//return spotifyApi.getUserPlaylists(username, nextOffset)
 		return spotifyApi.getUserPlaylists(Box.nextOffset)
-		.then(promRes, promRej)
 		.then(function(data){
 			console.log(data);
 			Box.playlists.push.apply(Box.playlists, data['items']);
@@ -67,7 +64,6 @@ var Box = {
 	currentSongs: [],
 	loadPlaylist: function(id) {
 		return spotifyApi.getPlaylist(id)
-		.then(promRes, promRej)
 		.then(function(data){
 			console.log(data);
 			Box.current = data;
@@ -82,7 +78,6 @@ var Box = {
 		var id = Box.current.id;
 		var offsetNumber = Box.currentSongs.length;
 		return spotifyApi.getPlaylistTracks(id, {'offset': offsetNumber})
-		.then(promRes, promRej)
 		.then(function(data){
 			console.log(data);
 			Box.currentSongs.push.apply(Box.currentSongs, data['items']);
@@ -104,7 +99,7 @@ var Box = {
 			//playlist already loaded
 			return Promise.resolve();
 		} else {
-			return Box.loadPlaylist(id)
+			return Box.loadPlaylist(id);
 			//.then(Box.loadAlbums)
 		}
 	},
@@ -115,22 +110,20 @@ var Box = {
 		var tracks = [];
 		var total = 0;
 		var offset = {offset: 0};
-		await spotifyApi.getAlbum(albumId)
-		.then(promRes, promRej)
+		return spotifyApi.getAlbum(albumId)
 		.then(function(data){
 			console.log(data);
 			tracks = data.tracks.items;
 			total = data.tracks.total;
 			offset.offset = data.tracks.limit;
 			while (tracks.length < total) {
-				var al = await spotifyApi.getAlbumTracks(albumId, offset)
-				.then(promRes, promRej)
-				.then(function(data){
-					console.log(data);
-					tracks.push.apply(tracks, data.items);
-					offset.offset = offset.offset + data.limit;
-					return null;
-				});
+				var newdata = await spotifyApi.getAlbumTracks(albumId, offset);
+				//.then(function(data){
+					console.log(newdata);
+					tracks.push.apply(tracks, newdata.items);
+					offset.offset = offset.offset + newdata.limit;
+					//return null;
+				//});
 			}
 			var shown = false;
 			var toQueue = [];
