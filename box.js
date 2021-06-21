@@ -109,7 +109,7 @@ var Box = {
 		}
 	},
 
-	addAlbumTracksFromPositionToQueue: function(song) {
+	addAlbumTracksFromPositionToQueue: async function(song) {
 		var songId = song.track.id;
 		var albumId = song.track.album.id;
 		var tracks = [];
