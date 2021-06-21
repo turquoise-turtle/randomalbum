@@ -123,7 +123,7 @@ var Box = {
 			total = data.tracks.total;
 			offset.offset = data.tracks.limit;
 			while (tracks.length < total) {
-				await spotifyApi.getAlbumTracks(albumId, offset)
+				var al = spotifyApi.getAlbumTracks(albumId, offset)
 				.then(promRes, promRej)
 				.then(function(data){
 					console.log(data);
