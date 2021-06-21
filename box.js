@@ -127,16 +127,47 @@ var Box = {
 			//});
 		}
 		console.log(tracks);
-		var shown = false;
-		var toQueue = [];
-		for (var title of tracks) {
-			console.log(title);
-			if (title.id == songId || shown) {
-				shown = true;
-				toQueue.push(spotifyApi.queue(title.uri));
-			}
+
+		function apiCall(item) {
+			// return new Promise((resolve) => {
+			// 	setTimeout(() => resolve(item.name), 1000);
+			// })
+			return spotifyApi.queue(item.uri);
 		}
-		return Promise.all(toQueue);
+		return new Promise((resolve) => {
+			let results = [];
+			function sendReq (itemsList, iterate, apiCall) {
+				setTimeout(() => {
+					// slice itemsList to send request according to the api limit
+					let slicedArray = itemsList.slice(iterate * 5, (iterate * 5 + 5));
+					result = slicedArray.map(item => apiCall(item));
+					results = [...results, ...result];
+				
+					// This will resolve the promise when reaches to the last iteration
+					if (iterate === Math.ceil(items.length / 5) - 1) {
+						resolve(results);
+					}
+				}, (1000 * iterate)); // every 1000ms runs (api limit of one second)
+			}
+		  
+			// This will make iteration to split array (requests) to chunks of five items 
+			for (i = 0; i < Math.ceil(items.length / 5); i++) {
+			  sendReq(tracks, i, apiCall);
+			}
+		}).then(Promise.all.bind(Promise)).then(console.log);
+		// Use Promise.all to wait for all requests to resolve
+		// To use it this way binding is required
+		
+		// var shown = false;
+		// var toQueue = [];
+		// for (var title of tracks) {
+		// 	console.log(title);
+		// 	if (title.id == songId || shown) {
+		// 		shown = true;
+		// 		toQueue.push(spotifyApi.queue(title.uri));
+		// 	}
+		// }
+		// return Promise.all(toQueue);
 		//});
 	}
 };
