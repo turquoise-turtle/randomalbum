@@ -129,6 +129,7 @@ var Box = {
 					console.log(data);
 					tracks.push.apply(tracks, data.items);
 					offset.offset = offset.offset + data.limit;
+					return null;
 				});
 			}
 			var shown = false;
