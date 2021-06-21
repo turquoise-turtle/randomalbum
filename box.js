@@ -15,6 +15,9 @@ var Box = {
 	playlists: [],
 	favourites: [],
 	loadUser: function() {
+		if (Box.username != '') {
+			return Promise.resolve();
+		}
 		return spotifyApi.getMe()
 		.then(promRes, promRej)
 		.then(function(data) {
@@ -26,6 +29,9 @@ var Box = {
 		});
 	},
 	loadPlaylists: function() {
+		if (Box.playlists.length > 0) {
+			return Promise.resolve();
+		}
 		return spotifyApi.getUserPlaylists()
 		.then(promRes, promRej)
 		.then(function(data){
