@@ -32,7 +32,8 @@ var Box = {
 			console.log(data);
 			Box.playlists = data['items'];
 			//Box.playlists.push.apply(Box.playlists, data['items']);
-			Box.nextOffset['offset'] = Box.nextOffset['offset'] + data['limit'];
+			//Box.nextOffset['offset'] = Box.nextOffset['offset'] + data['limit'];
+			Box.nextOffset['offset'] = data['limit'];
 			Box.total = data['total'];
 			console.log(Box.nextOffset);
 			m.redraw();
@@ -97,7 +98,7 @@ var Box = {
 			//playlist already loaded
 		} else {
 			return Box.loadPlaylist(id)
-			.then(Box.loadAlbums)
+			//.then(Box.loadAlbums)
 		}
 	},
 	loadAlbums: function() {
