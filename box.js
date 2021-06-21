@@ -96,6 +96,7 @@ var Box = {
 	loadAlbumPage: function(id) {
 		if (Box.current.id == id) {
 			//playlist already loaded
+			return Promise.resolve();
 		} else {
 			return Box.loadPlaylist(id)
 			//.then(Box.loadAlbums)
