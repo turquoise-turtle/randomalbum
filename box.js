@@ -184,7 +184,7 @@ var Box = {
 		});
 		for (var song of playableSongs) {
 			console.log(song);
-			await spotifyApi.queue(song.track.id);
+			await spotifyApi.queue(song.track.uri);
 		}
 	}
 };
