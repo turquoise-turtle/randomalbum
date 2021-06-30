@@ -70,7 +70,12 @@ var Footer = {
 						//var x = document.querySelectorAll('div.row[data-type="show"]');var n = Math.floor(Math.random() * 50);x[n].scrollIntoView();x[n].style.backgroundColor = 'linen'
 					})
 				}
-			}, 'Random Album')
+			}, 'Random Album'),
+			m('button.queueAll', {
+				onclick: async function() {
+					throttle(Box.addSongsToQueue, 400)
+				}
+			}, 'Add All To Queue')
 		])
 	}
 };
@@ -83,17 +88,18 @@ var Playlist = {
 		return m('.playlist', [
 			m('h2', {value: Box.current.name}), 
 			m('.tracks', Box.currentSongs.filter(function(song){
-				return song.track.available_markets.length > 0;
+				return song.track.available_markets.length > 0 && song.track.type == 'track';
 			}).map(function(song){
 				return m('.track', [
-					m('h3', song.track.name),
-					m('button.queuebtn', {
-						onclick: async function() {
-							throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song])
-						}
-					}, 'Add to Queue')
+					m('h3', song.track.name)//,
+					// m('button.queuebtn', {
+					// 	onclick: async function() {
+					// 		throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song])
+					// 	}
+					// }, 'Add to Queue')
 				]);
 			})),
+			
 			m(Footer)
 		]);
 	}
@@ -121,12 +127,18 @@ var Album = {
 			m('.albums', Box.currentSongs.filter(function(song, index, self){
 				return song.track.available_markets.length > 0;
 			}).map(function(song){
-				return m('a', {
+				return m('.album', [m('a.albumLink', {
 					href: song.track.album.uri,
 					style: {
 						display: 'block'
 					}
-				}, m('.album', m('h3', song.track.album.name)));
+				}, m('h3', song.track.album.name)),
+				m('button.queuebtn', {
+					onclick: async function() {
+						throttle(Box.addAlbumTracksFromPositionToQueue, 400, [song])
+					}
+				}, 'Add to Queue')])
+				
 			})),
 			m(Footer)
 		]);

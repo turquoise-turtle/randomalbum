@@ -133,11 +133,11 @@ var Box = {
 		}
 		var shown = false;
 		for (var title of tracks) {
-			console.log(title);
 			if (title.id == songId || shown) {
+				console.log(title);
 				shown = true;
 				await spotifyApi.queue(title.uri);
-				await delay(100);
+				// await delay(100);
 			}
 		}
 
@@ -177,6 +177,15 @@ var Box = {
 		// }
 		// return Promise.all(toQueue);
 		//});
+	},
+	addSongsToQueue: async function() {
+		var playableSongs = Box.currentSongs.filter(function(song){
+			return song.track.available_markets.length > 0 && song.track.type == 'track';
+		});
+		for (var song of playableSongs) {
+			console.log(song);
+			await spotifyApi.queue(song.track.id);
+		}
 	}
 };
 
